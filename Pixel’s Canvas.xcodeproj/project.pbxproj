@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		018646E71309177E00CDD43C /* PCRandom.m in Sources */ = {isa = PBXBuildFile; fileRef = 018646E61309177E00CDD43C /* PCRandom.m */; };
 		01F7C9C71308280B003C8527 /* PCMainView.m in Sources */ = {isa = PBXBuildFile; fileRef = 01F7C9C61308280B003C8527 /* PCMainView.m */; };
 		01F7C9CA130828B9003C8527 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01F7C9C9130828B9003C8527 /* QuartzCore.framework */; };
 		01F7CA6513088936003C8527 /* PCBezierView.m in Sources */ = {isa = PBXBuildFile; fileRef = 01F7CA6413088936003C8527 /* PCBezierView.m */; };
@@ -18,6 +19,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		018646E51309177E00CDD43C /* PCRandom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PCRandom.h; sourceTree = "<group>"; };
+		018646E61309177E00CDD43C /* PCRandom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PCRandom.m; sourceTree = "<group>"; };
 		01F7C9C61308280B003C8527 /* PCMainView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PCMainView.m; sourceTree = "<group>"; };
 		01F7C9C9130828B9003C8527 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		01F7C9D813082989003C8527 /* PCMainView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PCMainView.h; sourceTree = "<group>"; };
@@ -67,6 +70,8 @@
 				01F7C9CD1308292D003C8527 /* Views */,
 				256AC3D80F4B6AC300CF3369 /* Pixel_s_CanvasAppDelegate.h */,
 				256AC3D90F4B6AC300CF3369 /* Pixel_s_CanvasAppDelegate.m */,
+				018646E51309177E00CDD43C /* PCRandom.h */,
+				018646E61309177E00CDD43C /* PCRandom.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -204,6 +209,7 @@
 				256AC3DA0F4B6AC300CF3369 /* Pixel_s_CanvasAppDelegate.m in Sources */,
 				01F7C9C71308280B003C8527 /* PCMainView.m in Sources */,
 				01F7CA6513088936003C8527 /* PCBezierView.m in Sources */,
+				018646E71309177E00CDD43C /* PCRandom.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

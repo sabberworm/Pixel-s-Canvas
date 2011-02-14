@@ -9,12 +9,13 @@
 #import "PCMainView.h"
 #import <QuartzCore/QuartzCore.h>
 
+#import "PCRandom.h"
+
 @interface PCMainView()
-- (CGPoint)randomPointInWindow;
-- (NSColor *)randomColor;
+- (void)renewPath;
+- (void)renewBackground;
 - (void)strokePath:(NSBezierPath *)path;
 - (void)fillPath:(NSBezierPath *)path;
-- (float)randomFloat;
 @end
 
 @implementation PCMainView
@@ -22,62 +23,81 @@
 - (id)initWithFrame:(NSRect)frame {
 	self = [super initWithFrame:frame];
 	if (self) {
-		srandom(500);
+		[self renewPath];
+		[self resetBackground];
 	}
 	return self;
 }
 
-- (void)drawRect:(NSRect)dirtyRect {
-	// Drawing code here.
-	NSBezierPath *path = [NSBezierPath new];
-	[[NSColor blackColor] setStroke];
-	[path setLineJoinStyle:NSRoundLineJoinStyle];
-	[path moveToPoint:[self randomPointInWindow]];
-	for(NSInteger i=0;i-1<arc4random()%5;i++) {
-		if(arc4random()%2 == 0) {
-			[path lineToPoint:NSPointFromCGPoint([self randomPointInWindow])];
-		} else {
-			[path curveToPoint:[self randomPointInWindow] controlPoint1:[self randomPointInWindow] controlPoint2:[self randomPointInWindow]];
-		}
+- (id)initWithCoder:(NSCoder *)aDecoder {
+	self = [super initWithCoder:aDecoder];
+	if (self) {
+		[self renewPath];
+		[self resetBackground];
 	}
-	[path closePath];
+	return self;
+}
+
+- (void)dealloc {
+	[path release];
+	[backgroundColor release];
+	[super dealloc];
+}
+
+- (void)renewBackground {
+	backgroundColor = [[PCRandom randomSolidColor] retain];
+}
+
+- (void)resetBackground {
+	backgroundColor = [[NSColor whiteColor] retain];
+}
+
+- (void)renewPath {
+	path = [[PCRandom randomPathWithMinPoints:2 maxPoints:5 withSize:self.frame.size] retain];
+}
+
+- (void)drawRect:(NSRect)dirtyRect {
+	if(backgroundColor != nil) {
+    [backgroundColor setFill];
+    NSRectFill(dirtyRect);
+	}
+	// Drawing code here.
 	if(arc4random()%3 != 0) {
 		[self strokePath:path];
-		if(arc4random()%2 == 0) {
+		if([PCRandom randomBool]) {
 			[self fillPath:path];
 		}
 	} else {
 		[self fillPath:path];
 	}
-	[path release];
 }
 
-- (void)strokePath:(NSBezierPath *)path {
-	[[self randomColor] setStroke];
-	[path setLineWidth:[self randomFloat]*8.0f];
-	[path stroke];
+- (void)strokePath:(NSBezierPath *)aPath {
+	[[PCRandom randomColor] setStroke];
+	[aPath setLineWidth:[PCRandom randomFloat]*8.0f];
+	[aPath stroke];
 }
 
-- (void)fillPath:(NSBezierPath *)path {
-	[[self randomColor] setFill];
-	[path fill];
-}
-
-- (NSColor *)randomColor {
-	return [NSColor colorWithDeviceRed:[self randomFloat] green:[self randomFloat] blue:[self randomFloat] alpha:[self randomFloat]];
-}
-
-- (float)randomFloat {
-	return ((float)arc4random())/((float)UINT32_MAX);
+- (void)fillPath:(NSBezierPath *)aPath {
+	[[PCRandom randomColor] setFill];
+	[aPath fill];
 }
 
 - (void)keyDown:(NSEvent *)theEvent {
+	if([theEvent isARepeat]) {
+		return;
+	}
+	if([theEvent keyCode] == 53) {
+		[self resetBackground];
+	} else {
+		[self renewPath];
+	}
 	[self setNeedsDisplay:YES];
 }
 
-- (CGPoint)randomPointInWindow {
-	CGRect frame = [self bounds];
-	return CGPointMake((CGFloat)(arc4random()%((int)frame.size.width)), (CGFloat)(arc4random()%((int)frame.size.height)));
+- (void)mouseUp:(NSEvent *)theEvent {
+	[self renewBackground];
+	[self setNeedsDisplay:YES];
 }
 
 - (BOOL)acceptsFirstResponder {

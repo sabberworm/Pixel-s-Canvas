@@ -10,7 +10,8 @@
 
 
 @interface PCMainView : NSView {
-
+	NSBezierPath *path;
+	NSColor *backgroundColor;
 }
 
 @end
