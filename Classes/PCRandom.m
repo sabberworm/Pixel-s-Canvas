@@ -40,7 +40,7 @@
 	[[NSColor blackColor] setStroke];
 	[path setLineJoinStyle:NSRoundLineJoinStyle];
 	[path moveToPoint:[PCRandom randomPointWithSize:size]];
-	for(NSInteger i=minPoints;i-minPoints<arc4random()%maxPoints-minPoints;i++) {
+	for(NSInteger i=0;i<(arc4random()%(maxPoints-minPoints))+minPoints;i++) {
 		if([PCRandom randomBool]) {
 			[path lineToPoint:NSPointFromCGPoint([PCRandom randomPointWithSize:size])];
 		} else {
